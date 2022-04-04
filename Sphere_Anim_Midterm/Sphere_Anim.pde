@@ -1,3 +1,6 @@
+import peasy.*; //I got this from looking at the open processing website and asking questions.
+
+PeasyCam cam; 
 /*I am going to attempt a midterm using some 3D primitives and try to make a animation 
 with spherical geometry. I want to add a timed event in some way with a couple of
 complimentary 2d shapes with it in the background.*/
@@ -5,6 +8,7 @@ complimentary 2d shapes with it in the background.*/
  int total = 20;
 void setup(){
   size(600, 600, P3D); 
+  cam = new PeasyCam(this, 20); 
   sphere = new PVector[total][total]; 
 }
 
@@ -13,7 +17,7 @@ void draw(){
   fill(255);
  lights();  //Lines 11 through 13 came from the processing reference and chap 14 
  //Same thing for P3D so it can render
-  translate(width/2, height/2); 
+  
   
  float r = 220; 
   //A integar we are going to need and reuse. 
@@ -35,7 +39,7 @@ void draw(){
      float z = r *  cos(longe); 
      sphere [i][o] = new PVector(x,y,z);  
      float angleMotion = map(mouseX, 0, width, 0, TWO_PI); //More of this from chap 14.
-     rotate(angleMotion); 
+     ; 
    stroke(255);
      point(x,y,z); //point to test out the structure
    
@@ -54,10 +58,10 @@ void draw(){
      beginShape(TRIANGLE_STRIP);
    for(int o = 0; o < total; o++){
      float colo = map(o, 0, total+1, 0, 255); 
-     fill(colo-mouseX-mouseY, mouseY, mouseX); 
+     if (mousePressed == true){
+       fill(colo-mouseX-mouseY, mouseY, mouseX); 
+     }
      PVector p1 = sphere [i][o];
-     float angleMotion = map(mouseX, 0, width, 0, TWO_PI); //More of this from chap 14.
-     rotate(angleMotion); 
      strokeWeight(5); 
    stroke(255);
      vertex(p1.x,p1.y,p1.z); //point to test out the structure

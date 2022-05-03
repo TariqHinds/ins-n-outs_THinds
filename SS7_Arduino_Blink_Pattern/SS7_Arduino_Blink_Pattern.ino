@@ -4,7 +4,7 @@ const int E = 11;
 const int F = 10;
 const int G = 9;
 const int A = 8;
-int led[] = {8,9,10,11,12,13}; 
+int led[] = {A,G,F,E,D,C}; 
 const int buttonPin = 2; 
 int buttonPress = 0; 
 void setup() {
@@ -24,13 +24,24 @@ int  timeShut = 10;
   buttonPress = digitalRead(buttonPin); 
   delay (10);
  if (buttonPress == HIGH) {
-   Pattern();
-}  else if (buttonPress == LOW){
-  
- for(;;); 
-  
+  Pattern();
+  if (buttonPress == LOW){
+    delay(25); 
+  digitalWrite(C, LOW);  
+  digitalWrite(D, LOW);  
+  digitalWrite(E, LOW);  
+  digitalWrite(F, LOW);  
+  digitalWrite(A, LOW);  
+  digitalWrite(G, LOW); 
   }
-}
+  
+   
+} 
+   
+  
+  
+ }
+
  
  
 

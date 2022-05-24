@@ -1,17 +1,24 @@
+import processing.sound.*;
+SoundFile music; 
  
 
 import processing.serial.*;
 
 //I gave up on trying to work the button and minim, so I reshaped to my plan B which is a interactive hypercube.
 //An idea I got from Adventure time and Marvel. 
-
-float angle = mouseX;
+float redA, grnA, bluA;
+float rainbow = 255; 
+int line = 4; 
+float angle = 0;
 Serial myPort; 
 P4Vector[] points = new P4Vector[16];
-int button = 0; 
+int val; 
 
 void setup() {
   fullScreen(P3D);
+  redA = random(TWO_PI);
+  grnA = random(TWO_PI);
+  bluA = random(TWO_PI);
   points[0] = new P4Vector(-1, -1, -1, 1);
   points[1] = new P4Vector(1, -1, -1, 1);
   points[2] = new P4Vector(1, 1, -1, 1);
@@ -34,12 +41,23 @@ void setup() {
 
 void draw() {
   if (myPort.available() > 0){
-  button = myPort.read(); 
+  val = myPort.read(); 
   }
   background(0);
-  if (button == 0){
-  background(255); 
-  } else {
+  if (val == 1){
+ background(color(cos(redA) * 25 + 25, cos(grnA) * 25 + 25, cos(bluA) * 25 + 25)); //Should change background gradually
+  redA += random(0,0.001);
+  grnA += random(0,0.001);
+  bluA += random(0,0.001);
+   
+  } else if(val == 2){
+  rainbow = radians(frameCount); 
+
+  } else if (val == 3){
+  line = 100; 
+
+  }
+  
   translate(width/2, height/2);
   rotateX(-PI/2);
   PVector[] projected3d = new PVector[16];
@@ -104,13 +122,14 @@ void draw() {
 
   //angle = map(mouseX, 0, width, 0, TWO_PI);
   angle += 0.02;
-}
+  
 }
 
 void connect(int offset, int i, int j, PVector[] points) {
   PVector a = points[i+offset];
   PVector b = points[j+offset];
-  strokeWeight(4);
-  stroke(255);
+  strokeWeight(line);
+  stroke(255*(.5+.5*cos(rainbow)),255,255);
+
   line(a.x, a.y, a.z, b.x, b.y, b.z);
 }

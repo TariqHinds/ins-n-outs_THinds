@@ -1,35 +1,48 @@
 
-/*First part of my project is to create a button value
-and send it to processing*/
-#define buttonPin 2 
-int LED = 13; 
-uint8_t btn_prev; 
-uint8_t btn_prev2; 
 
+// constants won't change. They're used here to set pin numbers:
+const int buttonPin = 2;
+const int buttonPin2 = 4;
+const int buttonPin3 = 3;// the number of the pushbutton pin
+const int ledPin =  13;      // the number of the LED pin
+
+// variables will change:
+int buttonState = 0;         // variable for reading the pushbutton status
+int buttonState2 = 0;
+int buttonState3 = 0;
 void setup() {
-  // put your setup code here, to run once:
-pinMode(buttonPin, INPUT_PULLUP); 
-pinMode(LED, OUTPUT); 
-btn_prev = digitalRead(buttonPin); 
+  // initialize the LED pin as an output:
+  pinMode(ledPin, OUTPUT);
+  // initialize the pushbutton pin as an input:
+  pinMode(buttonPin, INPUT);
+    pinMode(buttonPin2, INPUT);
 
+  pinMode(buttonPin3, INPUT);
 Serial.begin(9600); 
-/*
- So to explain this setup. I am basically making a button previous state hold 8bytes of data that can be read and I connected as a digitalRead to the button pin to get that signal
- */
 }
 
 void loop() {
-  uint8_t button = digitalRead(buttonPin); 
- if (button == LOW && btn_prev == HIGH){
-  Serial.println("Button press"); 
-   
-  digitalWrite(LED, HIGH);
-  delay(20000);
-  digitalWrite(LED, LOW); 
- } 
-  
- btn_prev = digitalRead(buttonPin); 
+  // read the state of the pushbutton value:
+  buttonState = digitalRead(buttonPin);
+  buttonState2 = digitalRead(buttonPin2);
+  buttonState3 = digitalRead(buttonPin3);
 
- 
-  
+  // check if the pushbutton is pressed. If it is, the buttonState is HIGH:
+  if (buttonState == HIGH) {
+    // turn LED on:
+    digitalWrite(ledPin, HIGH);
+    Serial.write(1); 
+  } else if (buttonState2 == HIGH) {
+    // turn LED on:
+    Serial.write(2); 
+    digitalWrite(ledPin, HIGH);
+  } else if (buttonState3 == HIGH) {
+    // turn LED on:
+    Serial.println(buttonState3); 
+    Serial.write(3); 
+    digitalWrite(ledPin, HIGH);
+  } else {
+    digitalWrite(ledPin, LOW);
+    Serial.write(0); 
+    }
 }

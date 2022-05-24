@@ -1,4 +1,3 @@
-//Creating the animated matrix and moving the points
 
 float[][] vecToMatrix(P4Vector v) {
   float[][] m = new float[4][1];
